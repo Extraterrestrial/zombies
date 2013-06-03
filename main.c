@@ -15,18 +15,26 @@
 #endif
 
 
-#define NAMES_SIZE 30
+#define NAMES_SIZE 54
 
 char * names[] = { "Amazon", "Assassin", "Sorceress",
 									"Paladin", "Necromancer", "Druid",
 									"Barbarian", "Akara", "Warriv",
-									"Anya", "Larzuk", "Natasha",
+									"Anya", "Larzuk", "Natalya",
 									"Asheara", "Charsi", "Tyrael",
 									"Deckard", "Flavie", "Gheed",
 									"Kashya", "Atma", "Drognan",
 									"Elzix", "Fara", "Geglash",
 									"Greiz", "Jehryn", "Kaelan",
-									"Lysander", "Meshif", "Ormus"
+									"Lysander", "Meshif", "Ormus",
+									"Alkor", "Hratli", "Halbu",
+									"Jamella", "Malah", "Nihlatak",
+									"Qual-Kehk", "Diablo", "Mephisto",
+									"Baal", "Duriel", "Radament",
+									"Andariel", "Rakanishu", "Torum",
+									"Negative", "Adrn", "Firk",
+									"Obsessed", "Grin", "Xardas",
+									"Plain", "Muny", "Archeg"
 								 };
 char ** zombie = NULL;
 int zombie_size = 0;
@@ -36,7 +44,7 @@ pthread_attr_t attr;
 
 int killme, score;
 
-int zomb_time = 5000;
+int zomb_time = 3000;
 int wave = 0;
 
 
@@ -115,7 +123,8 @@ int zombies_start()
   }
 
   if(wave % 5 == 0) {
-    zomb_time-=200;
+    if(zomb_time > 1300)
+      zomb_time-=200;
     zombie_size = 0;
   }
 
