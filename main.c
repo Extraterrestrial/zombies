@@ -190,7 +190,7 @@ int main()
  	Sleep(1);
 	pthread_create(&pthread, &attr, threadfunc, NULL);
  	while(1) {
-  	shoot(pthread);
+  	shoot();
   }
 	return 0;
 }
