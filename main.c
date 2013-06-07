@@ -15,27 +15,28 @@
 #endif
 
 
-#define NAMES_SIZE 54
+#define NAMES_SIZE 55
 
 char * names[] = { "Amazon", "Assassin", "Sorceress",
-									"Paladin", "Necromancer", "Druid",
-									"Barbarian", "Akara", "Warriv",
-									"Anya", "Larzuk", "Natalya",
-									"Asheara", "Charsi", "Tyrael",
-									"Deckard", "Flavie", "Gheed",
-									"Kashya", "Atma", "Drognan",
-									"Elzix", "Fara", "Geglash",
-									"Greiz", "Jehryn", "Kaelan",
-									"Lysander", "Meshif", "Ormus",
-									"Alkor", "Hratli", "Halbu",
-									"Jamella", "Malah", "Nihlatak",
-									"Qual-Kehk", "Diablo", "Mephisto",
-									"Baal", "Duriel", "Radament",
-									"Andariel", "Rakanishu", "Torum",
-									"Negative", "Adrn", "Firk",
-									"Obsessed", "Grin", "Xardas",
-									"Plain", "Muny", "Archeg"
-								 };
+		   "Paladin", "Necromancer", "Druid",
+		   "Barbarian", "Akara", "Warriv",
+		   "Anya", "Larzuk", "Natalya",
+		   "Asheara", "Charsi", "Tyrael",
+		   "Deckard", "Flavie", "Gheed",
+		   "Kashya", "Atma", "Drognan",
+		   "Elzix", "Fara", "Geglash",
+		   "Greiz", "Jehryn", "Kaelan",
+		   "Lysander", "Meshif", "Ormus",
+		   "Alkor", "Hratli", "Halbu",
+		   "Jamella", "Malah", "Nihlatak",
+		   "Qual-Kehk", "Diablo", "Mephisto",
+		   "Baal", "Duriel", "Radament",
+		   "Andariel", "Rakanishu", "Torum",
+		   "Negative", "Adrn", "Firk",
+		   "Obsessed", "Grin", "Xardas",
+		   "Plain", "Muny", "Archeg",
+		   "Myatko", "Irknet", "Aler"
+		 };
 char ** zombie = NULL;
 int zombie_size = 0;
 
@@ -51,12 +52,12 @@ int wave = 0;
 
 void zombies_lookout()
 {
-	int i = 0;
+  int i = 0;
+  
+  for(i = 0; i < zombie_size; i++)
+  printf("Zombie \"%s\".\n", zombie[i]);
 
-	for(i = 0; i < zombie_size; i++)
-		printf("Zombie \"%s\".\n", zombie[i]);
-
-	return;
+  return;
 }
 
 int zombies_check_corpses()
@@ -72,16 +73,16 @@ int zombies_check_corpses()
 
 int zombies_reload_ammo(int ammo)
 {
-	printf("Reloading shotgun...\n");
+  printf("Reloading shotgun...\n");
   Sleep(3000);
   ammo = 7;
   return ammo;
 }
 int zombies_start()
 {
-	int i = 0;
+  int i = 0;
 
-	srand(time(NULL));
+  srand(time(NULL));
 
   wave++;
   zombie_size += 5;
@@ -97,28 +98,28 @@ int zombies_start()
   printf("Wave %d, get ready...\n", wave);
   Sleep(3000);
   zombies_lookout();
-	for(i = 0; i < zombie_size; i++) {
-	  if(strcmp(zombie[i], "_CORPSE")) {
-			printf("Zombie \"%s\" is nearby, shoot them NOW!!!\n", zombie[i]);
-			Sleep(zomb_time);
-	  }
-		else {
-		  Sleep(zomb_time);
-		  if(zombies_check_corpses() == zombie_size)
-		    return 0;
-		}
 
-		if(strcmp(zombie[i], "_CORPSE")) {
-		  printf("\nZombie \"%s\" kill you!\n", zombie[i]);
-		  printf("You was eaten by zombies.\n");
-		  printf("Your dead of valor will be remembered.\n");
+  for(i = 0; i < zombie_size; i++) {
+    if(strcmp(zombie[i], "_CORPSE")) {
+      printf("Zombie \"%s\" is nearby, shoot them NOW!!!\n", zombie[i]);
+      Sleep(zomb_time);
+    }
+    else {
+      Sleep(zomb_time);
+      if(zombies_check_corpses() == zombie_size)
+        return 0;
+    }
+    if(strcmp(zombie[i], "_CORPSE")) {
+      printf("\nZombie \"%s\" kill you!\n", zombie[i]);
+      printf("You was eaten by zombies.\n");
+      printf("Your dead of valor will be remembered.\n");
 
-	    killme = 1;
-	    printf("Your score: %d zombies.\n", score);
-
-		  /* shutdown */
-	    free(zombie);
-	    exit(0);
+      killme = 1;
+      printf("Your score: %d zombies.\n", score);
+      
+      /* shutdown */
+      free(zombie);
+      exit(0);
     }
   }
 
@@ -128,14 +129,14 @@ int zombies_start()
     zombie_size = 0;
   }
 
-	return 0;
+  return 0;
 }
 
 static void * threadfunc(void * arg)
 {
   while(1) {
     zombies_start();
-
+    
     if(killme == 1)
       break;
   }
@@ -143,9 +144,9 @@ static void * threadfunc(void * arg)
 
 int shoot()
 {
-	char * target = malloc(255);
-	int i = 0;
-	static char ammo = 7;
+  char * target = malloc(255);
+  int i = 0;
+  static char ammo = 7;
 
   Sleep(1);
   printf("Target: ");
@@ -166,10 +167,10 @@ int shoot()
     return 1;
   }
 
-	if(ammo == 0) {
-	  printf("You have no ammo in the shotgun.\n");
-	  return 1;
-	}
+  if(ammo == 0) {
+    printf("You have no ammo in the shotgun.\n");
+    return 1;
+  }
 
   else if(!strcmp(target, "_CORPSE")) {
     printf("You can't kill corpse, lol\n");
@@ -177,15 +178,15 @@ int shoot()
     return 1;
   }
 
-	printf("Player shoots with good shotgun...\n");
-	ammo--;
-	for(i = 0; i < zombie_size; i++) {
-	  if(!strcmp(zombie[i], target)) {
-	    strcpy(zombie[i], "_CORPSE");
-	    printf("Zombie killed!\n\n");
-	    score++;
-	    return 0;
-	  }
+  printf("Player shoots with good shotgun...\n");
+  ammo--;
+  for(i = 0; i < zombie_size; i++) {
+    if(!strcmp(zombie[i], target)) {
+      strcpy(zombie[i], "_CORPSE");
+      printf("Zombie killed!\n\n");
+      score++;
+      return 0;
+    }
   }
   printf("You are missed, zombie is still alive...\n");
   return 1;
@@ -194,12 +195,12 @@ int shoot()
 
 int main()
 {
- 	pthread_attr_init(&attr);
- 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
- 	Sleep(1);
-	pthread_create(&pthread, &attr, threadfunc, NULL);
- 	while(1) {
-  	shoot();
+  pthread_attr_init(&attr);
+  pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+  Sleep(1);
+  pthread_create(&pthread, &attr, threadfunc, NULL);
+  while(1) {
+    shoot();
   }
-	return 0;
+  return 0;
 }
