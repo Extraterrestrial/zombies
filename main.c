@@ -15,7 +15,7 @@
 #endif
 
 
-#define NAMES_SIZE 55
+#define NAMES_SIZE 57
 
 char * names[] = { "Amazon", "Assassin", "Sorceress",
 		   "Paladin", "Necromancer", "Druid",
