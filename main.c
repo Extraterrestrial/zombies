@@ -3,7 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
-//#include <signal.h>
+#include <sys/socket.h>
+
+/* #include <signal.h> */
+/* TODO: Add signal handlers */
 
 #ifdef _WIN32
 #include <windows.h>
@@ -17,6 +20,7 @@
 
 #define NAMES_SIZE 57
 
+/* These names from Diablo II =) */
 char * names[] = { "Amazon", "Assassin", "Sorceress",
 		   "Paladin", "Necromancer", "Druid",
 		   "Barbarian", "Akara", "Warriv",
@@ -82,12 +86,14 @@ int zombies_start()
 {
   int i = 0;
 
+  /* Destroying old zombies, before we can allocate new zombies =) */
+  free(zombie);
   srand(time(NULL));
 
   wave++;
   zombie_size += 5;
 
-  /* Generating array for zombies */
+  /* Allocate memory for zombies */
   zombie = malloc(sizeof(char *) * zombie_size);
 
   /* fill array with zombie names */
@@ -117,17 +123,20 @@ int zombies_start()
       killme = 1;
       printf("Your score: %d zombies.\n", score);
       
-      /* shutdown */
+      /* Free the zombie array and shutdown */
       free(zombie);
       exit(0);
     }
   }
 
   if(wave % 5 == 0) {
-    if(zomb_time > 1300)
-      zomb_time-=200;
+    if(zomb_time > 1300) {
+        zomb_time-=200;
+        printf("Zombie time has increased...\n");
+    }
     zombie_size = 0;
   }
+
 
   return 0;
 }
@@ -136,9 +145,7 @@ static void * threadfunc(void * arg)
 {
   while(1) {
     zombies_start();
-    
-    if(killme == 1)
-      break;
+    /* .... */
   }
 }
 
@@ -198,6 +205,8 @@ int main()
   pthread_attr_init(&attr);
   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
   Sleep(1);
+
+  /* Start the main thread */
   pthread_create(&pthread, &attr, threadfunc, NULL);
   while(1) {
     shoot();
